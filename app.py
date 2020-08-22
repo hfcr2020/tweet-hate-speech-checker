@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 import tensorflow as tf
 import re
 import string
@@ -28,11 +28,14 @@ def custom_standardization(input_data):
 
 model = keras.models.load_model('hate_speech_model',
                                 custom_objects={'TextVectorization': TextVectorization,
-                                                'custom_standardization': custom_standardization}
-                                )
+                                                'custom_standardization': custom_standardization})
 
-@app.route("/", methods=["POST"])
-def index():
+@app.route('/')
+def root():
+    return render_template('index.html')
+
+@app.route("/validate", methods=["POST"])
+def validate():
     print("Request received")
     tweet = request.json
     print("Tweet: " + tweet['tweet'])
