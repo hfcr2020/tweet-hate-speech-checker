@@ -32,6 +32,7 @@ model = keras.models.load_model('hate_speech_model',
 
 @app.route('/')
 def root():
+    print("Render index")
     return render_template('index.html')
 
 @app.route("/validate", methods=["POST"])
